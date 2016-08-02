@@ -4,8 +4,9 @@ import java.util.Arrays;
 
 public class MaximumSubarray {
 	public static void main(String[] args) {
-		int[] arr = {1,-4,3,-4};
-		System.out.println(maxSubarray(arr,0,3));
+		int[] arr = {13,-3,-25,20,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7};
+		System.out.println(maxSubarray(arr,0,15));
+		System.out.println(bruteForce(arr));
 	}
 	
 	public static int maxCrossingSubarry(int[] arr, int low, int mid, int high) {
@@ -28,6 +29,9 @@ public class MaximumSubarray {
 		return leftSum + rightSum;
 	}
 	
+	/*
+	 * O(nlg(n)) 
+	 */
 	public static int maxSubarray(int[] arr, int low, int high) {
 		if(high == low) {
 			return arr[low];
@@ -44,5 +48,26 @@ public class MaximumSubarray {
 				return maxCross;
 			}
 		}
+	}
+	
+	/*
+	 * O(n^2)
+	 */
+	public static int bruteForce(int[] arr) {
+		int maxSum = 0;
+		for(int i = 0; i < arr.length; i++) {
+			int sum = 0;
+			int maxInIteration = 0;
+			for(int j = i; j < arr.length; j++) {
+				sum += arr[j];
+				if(sum > maxInIteration) {
+					maxInIteration = sum;
+				}
+			}
+			if(i == 0 || maxInIteration > maxSum) {
+				maxSum = maxInIteration;
+			}
+		}
+		return maxSum;
 	}
 }
