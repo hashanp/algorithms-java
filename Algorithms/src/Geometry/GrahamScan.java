@@ -6,20 +6,6 @@ import java.util.stream.Collectors;
 import java.util.Arrays;
 
 public class GrahamScan {
-	public static class Point {
-		int x;
-		int y;
-		
-		public Point(int x, int y) {
-			this.x = x;
-			this.y = y;
-		}
-		
-		public String toString() {
-			return "(" + x + "," + y + ")";
-		}
-	}
-	
 	public static enum Direction {
 		LeftTurn,
 		RightTurn,
@@ -27,7 +13,7 @@ public class GrahamScan {
 	}
 	
 	public static Direction getDirection(Point a, Point b, Point c) {
-		int crossProduct = (b.x - a.x) * (c.y - a.y) - (b.y - a.y) * (c.x - a.x);
+		int crossProduct = b.minus(a).getCrossProduct(c.minus(a));
 		if(crossProduct == 0) {
 			return Direction.Collinear;
 		} else if(crossProduct < 0) {
@@ -38,7 +24,7 @@ public class GrahamScan {
 	}
 	
 	public static double getAngle(Point a, Point b) {
-		return Math.atan2(a.y-b.y, a.x-b.x);
+		return Math.atan2(a.y - b.y, a.x - b.x);
 	}
 	
 	public static List<Point> grahamScan(Point[] arr) {
