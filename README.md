@@ -17,6 +17,7 @@ This repo contains implementations of common algorithms and data structures in J
 - Insertion Sort
 - Merge Sort
 - Selection Sort
+- Quicksort
 
 ### Searching Algorithms
 - Binary Search
