@@ -17,3 +17,13 @@ This repo contains implementations of common algorithms and data structures in J
 - Insertion Sort
 - Merge Sort
 - Selection Sort
+
+## Searching Algorithms
+- Binary Search
+- Maximum Subarray Problem
+
+## Geometric Algorithms
+- Graham Scan
+
+## Parsing
+- RPN Evaluator
