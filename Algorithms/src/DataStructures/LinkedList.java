@@ -80,16 +80,34 @@ public class LinkedList<T> implements List<T> {
 			
 		};
 	}
+	
+	public void reverse() {
+		Node<T> last = null;
+		Node<T> current = first;
+		while(current != null) {
+			Node<T> temp = current.next;
+			current.next = last;
+			last = current;
+			current = temp;
+		}
+		first = last;
+	}
 
 	public static void main(String[] args) {
 		LinkedList<Integer> k = new LinkedList<>();
 		k.add(4);
 		k.add(5);
+		k.add(6);
 		for(Integer y: k) {
 			System.out.println(y);
 		}
-		System.out.println(k.get(0));
-		k.remove(0);
-		System.out.println(k.get(0));
+	//	System.out.println(k.get(0));
+	//	k.remove(0);
+	//	System.out.println(k.get(0));
+		k.reverse();
+		for(Integer y: k) {
+			System.out.println(y);
+		}
+		System.out.println(k.first);
 	}
 }
