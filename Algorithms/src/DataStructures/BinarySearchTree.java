@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Iterator;
 
 public class BinarySearchTree<A extends Comparable<A>, B> {
-	private static class Node<A extends Comparable<A>, B> {
+	public static class Node<A extends Comparable<A>, B> {
 		A key;
 		B value;
 		Node<A, B> left;
@@ -70,6 +70,22 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 		}
 	}
 	
+	public Node<A, B> minimum() {
+		Node<A, B> current = root;
+		while(current.left != null) {
+			current = current.left;
+		}
+		return current;
+	}
+	
+	public Node<A, B> maximum() {
+		Node<A, B> current = root;
+		while(current.right != null) {
+			current = current.right;
+		}
+		return current;
+	}
+	
 	public int size() {
 		if(root == null) {
 			return 0;
@@ -89,5 +105,7 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 		System.out.println(k.get(6));
 		System.out.println(k.get(7));
 		System.out.println(k.size());
+		System.out.println(k.minimum().value);
+		System.out.println(k.maximum().value);
 	}
 }
