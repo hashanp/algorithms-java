@@ -1,21 +1,33 @@
 package DataStructures;
 
 import java.util.NoSuchElementException;
+import java.util.Iterator;
 
 public class BinarySearchTree<A extends Comparable<A>, B> {
-	public static class Node<A extends Comparable<A>, B> {
+	private static class Node<A extends Comparable<A>, B> {
 		A key;
 		B value;
-		Node left;
-		Node right;
+		Node<A, B> left;
+		Node<A, B> right;
 		
 		public Node(A key, B value) {
 			this.key = key;
 			this.value = value;
 		}
+		
+		protected int size() {
+			int s = 1;
+			if(left != null) {
+				s += left.size();
+			}
+			if(right != null) {
+				s += right.size();
+			}
+			return s;
+		}
 	}
 	
-	public Node<A, B> root;
+	private Node<A, B> root;
 		
 	public void insert(A key, B value) {
 		if(root == null) {
@@ -58,6 +70,14 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 		}
 	}
 	
+	public int size() {
+		if(root == null) {
+			return 0;
+		} else {
+			return root.size();
+		}
+	}
+	
 	public static void main(String[] args) {
 		BinarySearchTree<Integer, Integer> k = new BinarySearchTree<>();
 		k.insert(4, 7);
@@ -68,5 +88,6 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 		System.out.println(k.get(1));
 		System.out.println(k.get(6));
 		System.out.println(k.get(7));
+		System.out.println(k.size());
 	}
 }
