@@ -7,6 +7,8 @@ public class MaximumSubarray {
 		int[] arr = {13,-3,-25,20,-3,-16,-23,18,20,-7,12,-5,-22,15,-4,7};
 		System.out.println(maxSubarray(arr,0,15));
 		System.out.println(bruteForce(arr));
+		System.out.println(linear(arr));
+
 	}
 	
 	public static int maxCrossingSubarry(int[] arr, int low, int mid, int high) {
@@ -69,5 +71,25 @@ public class MaximumSubarray {
 			}
 		}
 		return maxSum;
+	}
+	
+	/*
+	 * O(n)
+	 */
+	public static int linear(int[] arr) {
+		int sum = 0;
+		int best = -1;
+		int bestSum = 0;
+		for(int i = 0; i < arr.length; i++) {
+			sum += arr[i];
+			if(sum > bestSum) {
+				bestSum = sum;
+				best = i;
+			}
+			if(sum < 0) {
+				sum = 0;
+			}
+		}
+		return bestSum;
 	}
 }
