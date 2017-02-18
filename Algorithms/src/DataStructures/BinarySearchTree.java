@@ -9,10 +9,12 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 		B value;
 		Node<A, B> left;
 		Node<A, B> right;
+		Node<A, B> parent;
 		
-		public Node(A key, B value) {
+		public Node(A key, B value, Node<A, B> parent) {
 			this.key = key;
 			this.value = value;
+			this.parent = parent;
 		}
 		
 		protected int size() {
@@ -25,26 +27,104 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 			}
 			return s;
 		}
+		
+		protected Node<A, B> minimum() {
+			Node<A, B> current = this;
+			while(current.left != null) {
+				current = current.left;
+			}
+			return current;
+		}
+		
+		protected Node<A, B> maximum() {
+			Node<A, B> current = this;
+			while(current.right != null) {
+				current = current.right;
+			}
+			return current;
+		}
+		
+		protected Node<A, B> successor() {
+			if(this.right != null) {
+				return this.right.minimum();
+			} else {
+				Node<A, B> current = this;
+				Node<A, B> next = this.parent;
+				while(next != null && next.right == current) {
+					current = next;
+					next = next.parent;
+				}
+				return next;
+			}
+		}
+		
+		protected void remove() {
+			if(this.left == null && this.right == null) {
+				transplant(null);
+			} else if(this.left == null) {
+				transplant(this.right);
+			} else if(this.right == null) {
+				transplant(this.left);
+			} else {
+				Node<A, B> replacement = this.successor();
+				if(this.right != replacement) {
+					replacement.transplant(replacement.right);
+					replacement.right = this.right;
+					replacement.right.parent = replacement;
+				}
+				transplant(replacement);
+				replacement.left = this.left;
+				replacement.left.parent = replacement;
+			}
+		}
+		
+		protected Node<A, B> get(A key) {
+			if(key.compareTo(this.key) == 0) {
+				return this;
+			} else if(key.compareTo(this.key) < 0) {
+				if(this.left == null) {
+					return null;
+				} else {
+					return this.left.get(key);
+				} 
+			} else {
+				if(this.right == null) {
+					return null;
+				} else {
+					return this.right.get(key);
+				}
+			}
+		}
+		
+		protected void transplant(Node<A, B> replacement) {
+			if(this.parent.left == this) {
+				this.parent.left = replacement;
+				replacement.parent = this.parent;
+			} else if(this.parent.right == this) {
+				this.parent.right = replacement;
+				replacement.parent = this.parent;
+			}
+		}
 	}
 	
 	private Node<A, B> root;
 		
 	public void insert(A key, B value) {
 		if(root == null) {
-			root = new Node<>(key, value);
+			root = new Node<>(key, value, null);
 		} else {
 			Node<A, B> current = root;
 			while(true) {
 				if(key.compareTo(current.key) < 0) {
 					if(current.left == null) {
-						current.left = new Node<>(key, value);
+						current.left = new Node<>(key, value, current);
 						break;
 					} else {
 						current = current.left;
 					}
 				} else if(key.compareTo(current.key) > 0) {
 					if(current.right == null) {
-						current.right = new Node<>(key, value);
+						current.right = new Node<>(key, value, current);
 						break;
 					} else {
 						current = current.right;
@@ -55,14 +135,15 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 	}
 	
 	public B get(A key) {
-		Node<A, B> current = root;
+		/*Node<A, B> current = root;
 		while(current != null && current.key != key) {
 			if(key.compareTo(current.key) < 0) {
 				current = current.left;
 			} else {
 				current = current.right;
 			}
-		}
+		}*/
+		Node<A, B> current = root.get(key);
 		if(current == null) {
 			throw new NoSuchElementException();
 		} else {
@@ -70,20 +151,21 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 		}
 	}
 	
-	public Node<A, B> minimum() {
-		Node<A, B> current = root;
-		while(current.left != null) {
-			current = current.left;
+	public void remove(A key) {
+		Node<A, B> node = root.get(key);
+		if(node == null) {
+			throw new NoSuchElementException();
+		} else {
+			node.remove();
 		}
-		return current;
+	}
+	
+	public Node<A, B> minimum() {
+		return root.minimum();
 	}
 	
 	public Node<A, B> maximum() {
-		Node<A, B> current = root;
-		while(current.right != null) {
-			current = current.right;
-		}
-		return current;
+		return root.maximum();
 	}
 	
 	public int size() {
@@ -107,5 +189,11 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 		System.out.println(k.size());
 		System.out.println(k.minimum().value);
 		System.out.println(k.maximum().value);
+		k.remove(6);
+		System.out.println(k.size());
+		System.out.println(k.get(4));
+		System.out.println(k.get(1));
+		System.out.println(k.get(7));
+		System.out.println(k.get(6));
 	}
 }
