@@ -11,41 +11,105 @@ import java.util.Arrays;
 public class Benchmark {
 	private static Random rand = new Random();
 	
-	/*public static int[] random(int len) {
-		int[] res = new int[len];
-		for(int i = 0; i < len; i++) {
-			res[i] = rand.nextInt(Integer.MAX_VALUE);
-		}
-		return res;
-	}*/
+	public static long timeHeapSort(int[] arr) {
+		long start = System.nanoTime();
+        HeapSort.heapSort(arr);
+        return System.nanoTime() - start;
+	}
 	
-	public static void main(String[] args) throws IOException {
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./sorting.csv")));
-		writer.write("Length,Heap Sort,Insertion Sort,Merge Sort,Selection Sort\n");
-		int[] arr = new int[0];
-		for(int i = 100; i < 20000; i+=100) {
+	public static long timeInsertionSort(int[] arr) {
+		long start = System.nanoTime();
+        InsertionSort.insertionSort(arr);
+        return System.nanoTime() - start;
+	}
+	
+	public static long timeMergeSort(int[] arr) {
+		long start = System.nanoTime();
+        MergeSort.mergeSort(arr);
+        return System.nanoTime() - start;
+	}
+	
+	public static long timeQuickSort(int[] arr) {
+		long start = System.nanoTime();
+        QuickSort.betterQuickSort(arr);
+        return System.nanoTime() - start;
+	}
+	
+	public static long timeSelectionSort(int[] arr) {
+		long start = System.nanoTime();
+        SelectionSort.selectionSort(arr);
+        return System.nanoTime() - start;
+	}
+	
+	public static long timeBubbleSort(int[] arr) {
+		long start = System.nanoTime();
+        BubbleSort.bubbleSort(arr);
+        return System.nanoTime() - start;
+	}
+	
+	public static long timeOptimisedBubbleSort(int[] arr) {
+		long start = System.nanoTime();
+        BubbleSort.optimisedBubbleSort(arr);
+        return System.nanoTime() - start;
+	}
+	
+	public static int[] copy(int[] arr) {
+		int[] copy = new int[arr.length];
+		System.arraycopy(arr, 0, copy, 0, arr.length);
+		return copy;
+	}
+	
+	@FunctionalInterface
+	public static interface ITestDataGenerator {
+		int[] generate(int n);
+	}
+	
+	public static ITestDataGenerator averageCase = (n) -> {
+		int[] ret = new int[n];
+		for(int i = 0; i < n; i++) {
+			ret[i] = rand.nextInt();
+		}
+		return ret;
+	};
+	
+	public static ITestDataGenerator sorted = (n) -> {
+		int[] ret = new int[n];
+		for(int i = 0; i < n; i++) {
+			ret[i] = i;
+		}
+		return ret;
+	};
+	
+	public static ITestDataGenerator reverseSorted = (n) -> {
+		int[] ret = new int[n];
+		for(int i = 0; i < n; i++) {
+			ret[i] = -i;
+		}
+		return ret;
+	};
+	
+	public static void benchmark(ITestDataGenerator testDataGenerator, String output, int start, int end, int increment) throws IOException {
+		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)));
+		writer.write("Length,Optimised Bubble Sort,Bubble Sort,Heap Sort,Insertion Sort,Merge Sort,Quick Sort,Selection Sort\n");
+		for(int i = start; i <= end; i += increment) {
 			System.out.println(i);
-			int[] arr2 = new int[i];
-			System.arraycopy(arr, 0, arr2, 0, i-100);
-			for(int j = i-100; j < i; j++) {
-				arr2[j] = rand.nextInt();
-			}
-			System.out.println(i);
-	        long start = System.nanoTime();
-	        HeapSort.heapSort(arr);
-	        long heapSort =  System.nanoTime() - start;
-	        start = System.nanoTime();
-	        InsertionSort.insertionSort(arr);
-	        long insertionSort =  System.nanoTime() - start;
-	        start = System.nanoTime();
-	        MergeSort.mergeSort(arr);
-	        long mergeSort =  System.nanoTime() - start;
-	        start = System.nanoTime();
-	        SelectionSort.selectionSort(arr);
-	        long selectionSort =  System.nanoTime() - start;
-	        writer.write(i + "," + heapSort + "," + insertionSort + "," + mergeSort + "," + selectionSort + "\n");
-	        arr = arr2;
+			int[] arr = testDataGenerator.generate(i);
+	        
+	        long heapSort = timeHeapSort(copy(arr));
+	        long insertionSort = timeInsertionSort(copy(arr));
+	        long mergeSort =  timeMergeSort(copy(arr));
+	        long quickSort = timeQuickSort(copy(arr));
+	        long selectionSort = timeSelectionSort(copy(arr));
+	        long bubbleSort =  timeBubbleSort(copy(arr));
+	        long optimisedBubbleSort = timeOptimisedBubbleSort(copy(arr));
+	      
+	        writer.write(i + "," + optimisedBubbleSort + "," + bubbleSort + "," + heapSort + "," + insertionSort + "," + mergeSort + "," + quickSort + "," + selectionSort + "\n");
 		}
 		writer.close();
+
+	}
+	
+	public static void main(String[] args) throws IOException {
+		benchmark(averageCase, "./sorting8.csv", 0, 100000, 10000);
 	}
 }
