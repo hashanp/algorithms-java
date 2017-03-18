@@ -22,6 +22,9 @@ public class Matrix {
 	}
 	
 	public Matrix multiply(Matrix other) {
+		if(this.cols != other.rows) {
+			throw new IllegalArgumentException();
+		}
 		Matrix ret = new Matrix(rows, other.cols);
 		for(int i = 0; i < other.cols; i++) {
 			for(int j = 0; j < rows; j++) {
@@ -45,6 +48,23 @@ public class Matrix {
 		return ret;
 	}
 	
+	public Matrix pow(int exponent) {
+		if(this.rows != this.cols) {
+			throw new UnsupportedOperationException();
+		}
+		if(exponent == 0) {
+			return Matrix.identity(this.rows);
+		} else {
+			Matrix m = this.multiply(this).pow(exponent / 2);
+			if(exponent % 2 == 0) {
+				return m;
+			} else {
+				return this.multiply(m);
+			}
+		}
+		
+	}
+	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
 		for(int[] datum: data) {
@@ -64,11 +84,16 @@ public class Matrix {
 	public static void main(String[] args) {
 		Matrix first = new Matrix(2, 2);
 		first.set(0, 0, 2);
+		first.set(0, 1, 3);
+		first.set(1, 0, 15);
+		first.set(1, 1, 4);
 		Matrix second = new Matrix(2, 1);
 		second.set(0, 0, 1);
 		System.out.println(first);
+		System.out.println(first.pow(7));
 		System.out.println(second);
 		System.out.println(first.multiply(second).multiply(5));
 		System.out.println(Matrix.identity(3).multiply(Matrix.identity(3)));
+		System.out.println(Matrix.identity(3).pow(3));
 	}
 }
