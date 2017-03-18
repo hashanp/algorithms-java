@@ -24,6 +24,45 @@ public class QuickSort {
 		// Return the place of pivot
 		return lastSmall+1;
 	}
+	
+	public static int hoarePartition(int[] arr, int p , int r) {
+		/*
+		 * Set pivot to the first element of `arr`.
+		 */
+		int x = arr[p];
+		int i = p - 1;
+		int j = r + 1;
+		while(true) {
+			do {
+				j = j - 1;
+			} while(arr[j] > x);
+			do {
+				i = i + 1;
+			} while(arr[i] < x);
+			/*
+			 * Assuming at the start of the while-loop,
+			 * arr[p..i] were all less than or equal to
+			 * the pivot and arr[j..r] were all greater
+			 * than or equal to the pivot, it is now the
+			 * case that those conditions hold  for arr[p..i-1] 
+			 * and arr[j+1..q]. 
+			 * 
+			 * But, arr[i] is greater than the pivot and
+			 * arr[j] is smaller than the pivot.
+			 */
+			if(i < j) {
+				/*
+				 * Here arr[i] and arr[j] are swapped to 
+				 * preserve the original invariants.
+				 */
+				int temp = arr[i];
+				arr[i] = arr[j];
+				arr[j] = temp;
+			} else {
+				return j;
+			}
+		}
+	}
 
 	/*
 	 * This version of quickSort is only good in the average case,
@@ -80,6 +119,34 @@ public class QuickSort {
 	
 	public static void betterQuickSort(int[] arr) {
 		betterQuickSort(arr, 0, arr.length - 1);
+	}
+	
+	
+	/*
+	 * Here is a version of `betterQuickSort` that uses Hoare partitioning,
+	 * as implemented in the `hoarePartition` method.
+	 */
+	
+	public static void hoareQuickSort(int[] arr, int p, int r) {
+		while(p < r) {
+			/*
+			 * The hoarePartition method partitions the array
+			 * such that every element in arr[q+1..r] is smaller
+			 * than or equal to every element in arr[p..q].
+			 */
+			int q = hoarePartition(arr, p, r);
+			if(q - p < r - q) {
+				quickSort(arr, p, q);
+				p = q + 1;
+			} else {
+				quickSort(arr, q + 1, r);
+				r = q;
+			}
+		}
+	}
+	
+	public static void hoareQuickSort(int[] arr) {
+		hoareQuickSort(arr, 0, arr.length - 1);
 	}
 	
 	public static void randomisedQuickSort(int[] arr) {
