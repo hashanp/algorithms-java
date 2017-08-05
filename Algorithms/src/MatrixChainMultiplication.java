@@ -1,6 +1,6 @@
-import DataStructures.Matrix;
-
 import java.util.Arrays;
+
+import Matrix.Matrix;
 
 public class MatrixChainMultiplication {
 	public static void main(String[] args) {
@@ -49,7 +49,7 @@ public class MatrixChainMultiplication {
 				int j = i + l - 1;
 				int min = -1;
 				for(int k = i; k < j; k++) {
-					int q = cost[i][k] + cost[k + 1][j] + (matrices[i].rows * matrices[j].cols * matrices[k].cols);
+					int q = cost[i][k] + cost[k + 1][j] + (matrices[i].getRows() * matrices[j].getCols() * matrices[k].getCols());
 					if(min == -1 || q < min) {
 						min = q;
 						cost[i][j] = q;

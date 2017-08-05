@@ -1,35 +1,43 @@
-package DataStructures;
+package Matrix;
 
 import java.util.Arrays;
 
 public class Matrix {
-	public int rows;
-	public int cols;
-	private int[][] data;
+	private int rows;
+	private int cols;
+	private double[][] data;
 	
 	public Matrix(int rows, int cols) {
 		this.rows = rows;
 		this.cols = cols;
-		data = new int[rows][cols];
+		data = new double[rows][cols];
 	}
 	
-	public int get(int m, int n) {
+	public double get(int m, int n) {
 		return data[m][n];
 	}
 	
-	public void set(int m, int n, int t) {
+	public int getRows() {
+		return this.rows;
+	}
+	
+	public int getCols() {
+		return this.cols;
+	}
+	
+	public void set(int m, int n, double t) {
 		data[m][n] = t;
 	}
 	
 	public Matrix multiply(Matrix other) {
-		if(this.cols != other.rows) {
+		if(this.getCols() != other.getRows()) {
 			throw new IllegalArgumentException();
 		}
-		Matrix ret = new Matrix(rows, other.cols);
-		for(int i = 0; i < other.cols; i++) {
-			for(int j = 0; j < rows; j++) {
+		Matrix ret = new Matrix(getRows(), other.getCols());
+		for(int i = 0; i < other.getCols(); i++) {
+			for(int j = 0; j < getRows(); j++) {
 				int sum = 0;
-				for(int k = 0; k < cols; k++) {
+				for(int k = 0; k < getCols(); k++) {
 					sum += this.get(j, k) * other.get(k, i);
 				}
 				ret.set(j, i, sum);
@@ -67,7 +75,7 @@ public class Matrix {
 	
 	public String toString() {
 		StringBuilder s = new StringBuilder();
-		for(int[] datum: data) {
+		for(double[] datum: data) {
 			s.append(Arrays.toString(datum) + "\n");
 		}
 		return s.toString();

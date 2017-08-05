@@ -1,4 +1,4 @@
-import DataStructures.Matrix;
+import Matrix.Matrix;
 
 public class Fibonacci {
 	/*
@@ -46,7 +46,7 @@ public class Fibonacci {
 		transformation.set(1, 1, 1);
 		
 		Matrix output = transformation.pow(n - 1).multiply(initial);
-		return output.get(1, 0);
+		return (int) output.get(1, 0);
 	}
 	
 	public static void main(String[] args) {
