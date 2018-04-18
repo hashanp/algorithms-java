@@ -66,13 +66,11 @@ public class LinkedList<T> implements List<T> {
 
       @Override
       public boolean hasNext() {
-        // TODO Auto-generated method stub
         return node != null;
       }
 
       @Override
       public T next() {
-        // TODO Auto-generated method stub
         Node<T> t = node;
         node = node.next;
         return t.item;
