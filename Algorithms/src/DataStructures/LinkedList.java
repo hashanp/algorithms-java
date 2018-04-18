@@ -17,11 +17,11 @@ public class LinkedList<T> implements List<T> {
   private int length = 0;
 
   public void add(T item) {
-    if(first == null) {
+    if (first == null) {
       first = new Node<T>(item);
     } else {
       Node<T> k = first;
-      while(k.next != null) {
+      while (k.next != null) {
         k = k.next;
       }
       k.next = new Node<T>(item);
@@ -30,21 +30,21 @@ public class LinkedList<T> implements List<T> {
   }
 
   public T get(int index) throws NoSuchElementException {
-    if(index >= length) {
+    if (index >= length) {
       throw new NoSuchElementException();
     }
     Node<T> k = first;
-    for(int i = 0; i < index; i++) {
+    for (int i = 0; i < index; i++) {
       k = k.next;
     }
     return k.item;
   }
 
   public void remove(int index) {
-    if(index >= length) {
+    if (index >= length) {
       throw new NoSuchElementException();
     }
-    if(index == 0) {
+    if (index == 0) {
       first = first.next;
     } else {
       Node<T> k = first;
@@ -84,7 +84,7 @@ public class LinkedList<T> implements List<T> {
   public void reverse() {
     Node<T> last = null;
     Node<T> current = first;
-    while(current != null) {
+    while (current != null) {
       Node<T> temp = current.next;
       current.next = last;
       last = current;
@@ -102,14 +102,14 @@ public class LinkedList<T> implements List<T> {
     k.add(4);
     k.add(5);
     k.add(6);
-    for(Integer y: k) {
+    for (Integer y: k) {
       System.out.println(y);
     }
   //	System.out.println(k.get(0));
   //	k.remove(0);
   //	System.out.println(k.get(0));
     k.reverse();
-    for(Integer y: k) {
+    for (Integer y: k) {
       System.out.println(y);
     }
   }
