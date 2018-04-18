@@ -19,8 +19,8 @@ public class HashMap<A, B> {
 
   public B get(A key) {
     int hash = key.hashCode() % list.length;
-    for(Node<A, B> el: list[hash]) {
-      if(el.key == key) {
+    for (Node<A, B> el: list[hash]) {
+      if (el.key == key) {
         return el.value;
       }
     }
@@ -29,12 +29,12 @@ public class HashMap<A, B> {
 
   private void rehash() {
     LinkedList<Node<A, B>>[] list2 = (LinkedList<Node<A, B>>[]) new LinkedList<?>[list.length * 2];
-    for(int i = 0; i < list.length; i++) {
-      if(list[i] != null) {
-        for(Node<A, B> el: list[i]) {
+    for (int i = 0; i < list.length; i++) {
+      if (list[i] != null) {
+        for (Node<A, B> el: list[i]) {
           int hash = el.key.hashCode() % list2.length;
-          if(list2[hash] == null) {
-            list2[hash] = new LinkedList<Node<A, B>>();
+          if (list2[hash] == null) {
+            list2[hash] = new LinkedList<>();
           }
           list2[hash].add(el);
         }
@@ -45,12 +45,12 @@ public class HashMap<A, B> {
 
   public void put(A key, B value) {
     int hash = key.hashCode() % list.length;
-    if(list[hash] == null) {
-      list[hash] = new LinkedList<Node<A, B>>();
+    if (list[hash] == null) {
+      list[hash] = new LinkedList<>();
     }
-    list[hash].add(new Node<A, B>(key, value));
+    list[hash].add(new Node<>(key, value));
     length++;
-    if(length > list.length * 0.75) {
+    if (length > list.length * 0.75) {
       rehash();
     }
   }
