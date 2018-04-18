@@ -1,9 +1,11 @@
 package DataStructures;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Arrays;
 
 public class MaxHeap {
-	private ArrayList<Integer> data = new ArrayList<>();
+	private List<Integer> data = new ArrayList<>();
 	
 	public void add(int item) {
 		int index = data.size();
@@ -54,6 +56,10 @@ public class MaxHeap {
 			}	
 		}
 		return c;
+	}
+	
+	public int maximum() {
+		return data.get(0);
 	}
 	
 	public boolean isEmpty() {
