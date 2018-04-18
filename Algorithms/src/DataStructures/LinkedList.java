@@ -5,8 +5,8 @@ import java.util.NoSuchElementException;
 
 public class LinkedList<T> implements List<T> {
 	private static class Node<T> {
-		T item;
-		Node<T> next;
+		public T item;
+		public Node<T> next;
 		
 		public Node(T item) {
 			this.item = item;
@@ -92,6 +92,10 @@ public class LinkedList<T> implements List<T> {
 		}
 		first = last;
 	}
+	
+	public boolean isEmpty() {
+		return this.size() == 0;
+	}
 
 	public static void main(String[] args) {
 		LinkedList<Integer> k = new LinkedList<>();
@@ -108,6 +112,5 @@ public class LinkedList<T> implements List<T> {
 		for(Integer y: k) {
 			System.out.println(y);
 		}
-		System.out.println(k.first);
 	}
 }
