@@ -13,7 +13,7 @@ public class ArrayList<T> implements List<T> {
 
   @SuppressWarnings("unchecked")
   public void add(T item) {
-    if(length == data.length) {
+    if (length == data.length) {
       T[] m = (T[]) new Object[data.length * 2];
       System.arraycopy(data, 0, m, 0, data.length);
       data = m;
@@ -23,7 +23,7 @@ public class ArrayList<T> implements List<T> {
   }
 
   public T get(int index) throws NoSuchElementException {
-    if(index >= length) {
+    if (index >= length) {
       throw new NoSuchElementException();
     }
     return data[index];
@@ -34,20 +34,20 @@ public class ArrayList<T> implements List<T> {
   }
 
   public void remove(int index) {
-    for(int i = index; i < length-1; i++) {
+    for (int i = index; i < length-1; i++) {
       data[i] = data[i+1];
     }
     length--;
   }
 
   public static void main(String[] args) {
-    ArrayList<Integer> m = new ArrayList<>();
+    List<Integer> m = new ArrayList<>();
     m.add(4);
     m.add(2);
     //m.remove(0);
     System.out.println(m.get(0));
 
-    for(Integer i: m) {
+    for (Integer i: m) {
       System.out.println(i);
     }
   }
