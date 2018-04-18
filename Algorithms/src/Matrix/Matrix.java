@@ -30,14 +30,14 @@ public class Matrix {
   }
 
   public Matrix multiply(Matrix other) {
-    if(this.getCols() != other.getRows()) {
+    if (this.getCols() != other.getRows()) {
       throw new IllegalArgumentException();
     }
     Matrix ret = new Matrix(getRows(), other.getCols());
-    for(int i = 0; i < other.getCols(); i++) {
-      for(int j = 0; j < getRows(); j++) {
+    for (int i = 0; i < other.getCols(); i++) {
+      for (int j = 0; j < getRows(); j++) {
         int sum = 0;
-        for(int k = 0; k < getCols(); k++) {
+        for (int k = 0; k < getCols(); k++) {
           sum += this.get(j, k) * other.get(k, i);
         }
         ret.set(j, i, sum);
@@ -48,8 +48,8 @@ public class Matrix {
 
   public Matrix multiply(int scalar) {
     Matrix ret = new Matrix(rows, cols);
-    for(int i = 0; i < rows; i++) {
-      for(int j = 0; j < cols; j++) {
+    for (int i = 0; i < rows; i++) {
+      for (int j = 0; j < cols; j++) {
         ret.set(i, j, data[i][j] * scalar);
       }
     }
@@ -57,14 +57,14 @@ public class Matrix {
   }
 
   public Matrix pow(int exponent) {
-    if(this.rows != this.cols) {
+    if (this.rows != this.cols) {
       throw new UnsupportedOperationException();
     }
-    if(exponent == 0) {
+    if (exponent == 0) {
       return Matrix.identity(this.rows);
     } else {
       Matrix m = this.multiply(this).pow(exponent / 2);
-      if(exponent % 2 == 0) {
+      if (exponent % 2 == 0) {
         return m;
       } else {
         return this.multiply(m);
@@ -75,7 +75,7 @@ public class Matrix {
 
   public String toString() {
     StringBuilder s = new StringBuilder();
-    for(double[] datum: data) {
+    for (double[] datum: data) {
       s.append(Arrays.toString(datum) + "\n");
     }
     return s.toString();
@@ -83,7 +83,7 @@ public class Matrix {
 
   public static Matrix identity(int n) {
     Matrix ret = new Matrix(n, n);
-    for(int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
       ret.set(i, i, 1);
     }
     return ret;
