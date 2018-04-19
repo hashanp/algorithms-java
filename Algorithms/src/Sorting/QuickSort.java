@@ -8,7 +8,7 @@ public class QuickSort {
 		// lastSmall refers to the last index that points to a value less 
 		// than the pivot where lastSmall <= i
 		int lastSmall = p - 1;
-		for(int i = p; i < r; i++) {
+		for(int i = p; i <= r; i++) {
 			if(arr[i] <= pivot) {
 				lastSmall++;
 				// Swap arr[lastSmall] and arr[i]
@@ -18,11 +18,11 @@ public class QuickSort {
 			}
 		}
 		// Swap arr[lastSmall+1] and arr[r]
-		int copy = arr[lastSmall+1];
+		/*int copy = arr[lastSmall+1];
 		arr[lastSmall+1] = arr[r];
-		arr[r] = copy;
+		arr[r] = copy;*/
 		// Return the place of pivot
-		return lastSmall+1;
+		return lastSmall;
 	}
 	
 	public static int hoarePartition(int[] arr, int p , int r) {
