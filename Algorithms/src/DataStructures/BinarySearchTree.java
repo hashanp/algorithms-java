@@ -105,32 +105,33 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 				replacement.parent = this.parent;
 			}
 		}
+		
+		protected void put(A key, B value) {
+			if(key.compareTo(this.key) < 0) {
+				if(this.left == null) {
+					this.left = new Node<A, B>(key, value, this);
+				} else {
+					this.left.put(key, value);
+				}
+			} else if(key.compareTo(this.key) == 0) {
+				this.value = value;
+			} else {
+				if(this.right == null) {
+					this.right = new Node<A, B>(key, value, this);
+				} else {
+					this.right.put(key, value);
+				}
+			}
+		}
 	}
 	
 	private Node<A, B> root;
 		
-	public void insert(A key, B value) {
+	public void put(A key, B value) {
 		if(root == null) {
 			root = new Node<>(key, value, null);
 		} else {
-			Node<A, B> current = root;
-			while(true) {
-				if(key.compareTo(current.key) < 0) {
-					if(current.left == null) {
-						current.left = new Node<>(key, value, current);
-						break;
-					} else {
-						current = current.left;
-					}
-				} else if(key.compareTo(current.key) > 0) {
-					if(current.right == null) {
-						current.right = new Node<>(key, value, current);
-						break;
-					} else {
-						current = current.right;
-					}
-				}
-			}
+			root.put(key, value);
 		}
 	}
 	
@@ -178,19 +179,22 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 	
 	public static void main(String[] args) {
 		BinarySearchTree<Integer, Integer> k = new BinarySearchTree<>();
-		k.insert(4, 7);
-		k.insert(1, 3);
-		k.insert(6, 8);
-		k.insert(7, 8);
+		k.put(4, 7);
+		k.put(1, 3);
+		k.put(6, 8);
+		k.put(7, 8);
 		System.out.println(k.get(4));
 		System.out.println(k.get(1));
 		System.out.println(k.get(6));
 		System.out.println(k.get(7));
+		System.out.println();
 		System.out.println(k.size());
 		System.out.println(k.minimum().value);
 		System.out.println(k.maximum().value);
+		System.out.println();
 		k.remove(6);
 		System.out.println(k.size());
+		System.out.println();
 		System.out.println(k.get(4));
 		System.out.println(k.get(1));
 		System.out.println(k.get(7));
