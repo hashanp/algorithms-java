@@ -2,15 +2,13 @@ package DataStructures;
 
 import java.util.NoSuchElementException;
 
-import DataStructures.BinarySearchTree.Node;
-
 public class RedBlackTree<A extends Comparable<A>, B> {
-  private static enum Colour {
+  private enum Colour {
     RED,
     BLACK
   }
 
-  public static class Node<A extends Comparable<A>, B> {
+  private static class Node<A extends Comparable<A>, B> {
     A key;
     B value;
     Node<A, B> left;
@@ -26,16 +24,16 @@ public class RedBlackTree<A extends Comparable<A>, B> {
     }
 
     protected Node<A, B> get(A key) {
-      if(key.compareTo(this.key) == 0) {
+      if (key.compareTo(this.key) == 0) {
         return this;
-      } else if(key.compareTo(this.key) < 0) {
-        if(this.left == null) {
+      } else if (key.compareTo(this.key) < 0) {
+        if (this.left == null) {
           return null;
         } else {
           return this.left.get(key);
         }
       } else {
-        if(this.right == null) {
+        if (this.right == null) {
           return null;
         } else {
           return this.right.get(key);
@@ -45,17 +43,17 @@ public class RedBlackTree<A extends Comparable<A>, B> {
   }
 
   private void fixup(Node<A, B> z) {
-    while(z.parent != null && z.parent.parent != null && z.parent.colour == Colour.RED) {
-      if(z.parent == z.parent.parent.left) {
+    while (z.parent != null && z.parent.parent != null && z.parent.colour == Colour.RED) {
+      if (z.parent == z.parent.parent.left) {
         Node<A, B> uncle = z.parent.parent.right;
 
-        if(uncle.colour == Colour.RED) {
+        if (uncle.colour == Colour.RED) {
           z.parent.colour = Colour.BLACK;
           uncle.colour = Colour.BLACK;
           z.parent.parent.colour = Colour.RED;
           z = z.parent.parent;
         } else {
-          if(z == z.parent.right) {
+          if (z == z.parent.right) {
             z = z.parent;
             leftRotate(z);
           }
@@ -66,13 +64,13 @@ public class RedBlackTree<A extends Comparable<A>, B> {
       } else {
         Node<A, B> uncle = z.parent.parent.left;
 
-        if(uncle.colour == Colour.RED) {
+        if (uncle.colour == Colour.RED) {
           z.parent.colour = Colour.BLACK;
           uncle.colour = Colour.BLACK;
           z.parent.parent.colour = Colour.RED;
           z = z.parent.parent;
         } else {
-          if(z == z.parent.left) {
+          if (z == z.parent.left) {
             z = z.parent;
             rightRotate(z);
           }
@@ -90,13 +88,13 @@ public class RedBlackTree<A extends Comparable<A>, B> {
     Node<A, B> y = x.right;
 
     x.right = y.left;
-    if(y.left == null) {
+    if (y.left == null) {
       y.left.parent = x;
     }
     y.parent = x.parent;
-    if(x.parent == null) {
+    if (x.parent == null) {
       root = y;
-    } else if(x == x.parent.left) {
+    } else if (x == x.parent.left) {
       x.parent.left = y;
     } else {
       x.parent.right = y;
@@ -109,13 +107,13 @@ public class RedBlackTree<A extends Comparable<A>, B> {
     Node<A, B> x = y.left;
 
     y.left = x.right;
-    if(x.right != null) {
+    if (x.right != null) {
       x.right.parent = y;
     }
     x.parent = y.parent;
-    if(y.parent == null) {
+    if (y.parent == null) {
       root = x;
-    } else if(y == y.parent.left) {
+    } else if (y == y.parent.left) {
       y.parent.left = x;
     } else {
       y.parent.right = x;
@@ -127,21 +125,21 @@ public class RedBlackTree<A extends Comparable<A>, B> {
   private Node<A, B> root;
 
   public void put(A key, B value) {
-    if(root == null) {
+    if (root == null) {
       root = new Node<>(key, value, null, Colour.RED);
     } else {
       Node<A, B> current = root;
-      while(true) {
-        if(key.compareTo(current.key) < 0) {
-          if(current.left == null) {
+      while (true) {
+        if (key.compareTo(current.key) < 0) {
+          if (current.left == null) {
             current.left = new Node<>(key, value, current, Colour.RED);
             fixup(current.left);
             break;
           } else {
             current = current.left;
           }
-        } else if(key.compareTo(current.key) > 0) {
-          if(current.right == null) {
+        } else if (key.compareTo(current.key) > 0) {
+          if (current.right == null) {
             current.right = new Node<>(key, value, current, Colour.RED);
             fixup(current.right);
             break;
@@ -155,7 +153,7 @@ public class RedBlackTree<A extends Comparable<A>, B> {
 
   public B get(A key) {
     Node<A, B> current = root.get(key);
-    if(current == null) {
+    if (current == null) {
       throw new NoSuchElementException();
     } else {
       return current.value;
