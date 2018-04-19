@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 import java.util.Iterator;
 
 public class BinarySearchTree<A extends Comparable<A>, B> {
-  public static class Node<A extends Comparable<A>, B> {
+  private static class Node<A extends Comparable<A>, B> {
     A key;
     B value;
     Node<A, B> left;
@@ -19,10 +19,10 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 
     protected int size() {
       int s = 1;
-      if(left != null) {
+      if (left != null) {
         s += left.size();
       }
-      if(right != null) {
+      if (right != null) {
         s += right.size();
       }
       return s;
@@ -30,7 +30,7 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 
     protected Node<A, B> minimum() {
       Node<A, B> current = this;
-      while(current.left != null) {
+      while (current.left != null) {
         current = current.left;
       }
       return current;
@@ -38,19 +38,19 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 
     protected Node<A, B> maximum() {
       Node<A, B> current = this;
-      while(current.right != null) {
+      while (current.right != null) {
         current = current.right;
       }
       return current;
     }
 
     protected Node<A, B> successor() {
-      if(this.right != null) {
+      if (this.right != null) {
         return this.right.minimum();
       } else {
         Node<A, B> current = this;
         Node<A, B> next = this.parent;
-        while(next != null && next.right == current) {
+        while (next != null && next.right == current) {
           current = next;
           next = next.parent;
         }
@@ -59,15 +59,15 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
     }
 
     protected void remove() {
-      if(this.left == null && this.right == null) {
+      if (this.left == null && this.right == null) {
         transplant(null);
-      } else if(this.left == null) {
+      } else if (this.left == null) {
         transplant(this.right);
-      } else if(this.right == null) {
+      } else if (this.right == null) {
         transplant(this.left);
       } else {
         Node<A, B> replacement = this.successor();
-        if(this.right != replacement) {
+        if (this.right != replacement) {
           replacement.transplant(replacement.right);
           replacement.right = this.right;
           replacement.right.parent = replacement;
@@ -79,16 +79,16 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
     }
 
     protected Node<A, B> get(A key) {
-      if(key.compareTo(this.key) == 0) {
+      if (key.compareTo(this.key) == 0) {
         return this;
-      } else if(key.compareTo(this.key) < 0) {
-        if(this.left == null) {
+      } else if (key.compareTo(this.key) < 0) {
+        if (this.left == null) {
           return null;
         } else {
           return this.left.get(key);
         }
       } else {
-        if(this.right == null) {
+        if (this.right == null) {
           return null;
         } else {
           return this.right.get(key);
@@ -97,7 +97,7 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
     }
 
     protected void transplant(Node<A, B> replacement) {
-      if(this.parent.left == this) {
+      if (this.parent.left == this) {
         this.parent.left = replacement;
         replacement.parent = this.parent;
       } else if(this.parent.right == this) {
@@ -107,17 +107,17 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
     }
 
     protected void put(A key, B value) {
-      if(key.compareTo(this.key) < 0) {
+      if (key.compareTo(this.key) < 0) {
         if(this.left == null) {
-          this.left = new Node<A, B>(key, value, this);
+          this.left = new Node<>(key, value, this);
         } else {
           this.left.put(key, value);
         }
-      } else if(key.compareTo(this.key) == 0) {
+      } else if (key.compareTo(this.key) == 0) {
         this.value = value;
       } else {
-        if(this.right == null) {
-          this.right = new Node<A, B>(key, value, this);
+        if (this.right == null) {
+          this.right = new Node<>(key, value, this);
         } else {
           this.right.put(key, value);
         }
@@ -128,7 +128,7 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
   private Node<A, B> root;
 
   public void put(A key, B value) {
-    if(root == null) {
+    if (root == null) {
       root = new Node<>(key, value, null);
     } else {
       root.put(key, value);
@@ -137,15 +137,15 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 
   public B get(A key) {
     /*Node<A, B> current = root;
-    while(current != null && current.key != key) {
-      if(key.compareTo(current.key) < 0) {
+    while (current != null && current.key != key) {
+      if (key.compareTo(current.key) < 0) {
         current = current.left;
       } else {
         current = current.right;
       }
     }*/
     Node<A, B> current = root.get(key);
-    if(current == null) {
+    if (current == null) {
       throw new NoSuchElementException();
     } else {
       return current.value;
@@ -154,7 +154,7 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
 
   public void remove(A key) {
     Node<A, B> node = root.get(key);
-    if(node == null) {
+    if (node == null) {
       throw new NoSuchElementException();
     } else {
       node.remove();
@@ -170,7 +170,7 @@ public class BinarySearchTree<A extends Comparable<A>, B> {
   }
 
   public int size() {
-    if(root == null) {
+    if (root == null) {
       return 0;
     } else {
       return root.size();
