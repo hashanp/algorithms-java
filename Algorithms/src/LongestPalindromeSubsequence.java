@@ -3,6 +3,8 @@ import java.util.Arrays;
 public class LongestPalindromeSubsequence {
 	public static void main(String[] args) {
 		System.out.println(longestPalindromeSubsequence("character"));
+		System.out.println(longestPalindromeSubsequence("aibophobia"));
+		System.out.println(longestPalindromeSubsequence("aibohphobia"));
 	}
 	
 	/*
