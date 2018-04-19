@@ -7,14 +7,10 @@ public class BubbleSort {
    * Best case time complexity: Θ(n^2)
    * Average case time complexity: Θ(n^2)
    * Worst case time complexity: Θ(n^2)
-   *
-   * Note an optimised implementation exists,
-   * of bubble sort with a best case time
-   * complexity of Θ(n).
    */
 
   public static void bubbleSort(int[] arr) {
-    for(int i = 0; i < arr.length - 1; i++) {
+    for (int i = 0; i < arr.length - 1; i++) {
       /*
        * Each iteration of this outer loop,
        * guarantees that at the end the (i + 1)-th
@@ -25,15 +21,10 @@ public class BubbleSort {
        * the subsection bounded by the indices
        * [arr.length - i, arr.length] is sorted and
        * contains the i biggest elements in arr.
-       *
-       * An alternative implementation of the algorithm,
-       * that is presented in CLRS, is with the inner loop,
-       * going downwards, meaning that the algorithm,
-       * sorts from the front.
        */
 
-      for(int j = 0; j < arr.length - i - 1; j++) {
-        if(arr[j] > arr[j + 1]) {
+      for (int j = 0; j < arr.length - i - 1; j++) {
+        if (arr[j] > arr[j + 1]) {
           /*
            * In the case, where arr[j] > arr[j + 1],
            * i.e. there is an inversion at indices j
@@ -58,10 +49,10 @@ public class BubbleSort {
   public static void optimisedBubbleSort(int[] arr) {
     boolean sorted = false;
     int n = arr.length;
-    while(!sorted) {
+    while (!sorted) {
       sorted = true;
-      for(int i = 0; i < n - 1; i++) {
-        if(arr[i] > arr[i + 1]) {
+      for (int i = 0; i < n - 1; i++) {
+        if (arr[i] > arr[i + 1]) {
           int temp = arr[i + 1];
           arr[i + 1] = arr[i];
           arr[i] = temp;
