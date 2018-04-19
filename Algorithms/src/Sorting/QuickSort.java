@@ -8,8 +8,8 @@ public class QuickSort {
     // lastSmall refers to the last index that points to a value less
     // than the pivot where lastSmall <= i
     int lastSmall = p - 1;
-    for(int i = p; i <= r; i++) {
-      if(arr[i] <= pivot) {
+    for (int i = p; i <= r; i++) {
+      if (arr[i] <= pivot) {
         lastSmall++;
         // Swap arr[lastSmall] and arr[i]
         int copy = arr[lastSmall];
@@ -32,7 +32,7 @@ public class QuickSort {
     int x = arr[p];
     int i = p - 1;
     int j = r + 1;
-    while(true) {
+    while (true) {
       do {
         j = j - 1;
       } while(arr[j] > x);
@@ -50,7 +50,7 @@ public class QuickSort {
        * But, arr[i] is greater than the pivot and
        * arr[j] is smaller than the pivot.
        */
-      if(i < j) {
+      if (i < j) {
         /*
          * Here arr[i] and arr[j] are swapped to
          * preserve the original invariants.
@@ -78,7 +78,7 @@ public class QuickSort {
    * hence no need to worry.
    */
   public static void quickSort(int[] arr, int p, int r) {
-    if(p < r) {
+    if (p < r) {
       int pivot = partition(arr, p, r);
       quickSort(arr, p, pivot-1);
       quickSort(arr, pivot+1, r);
@@ -105,9 +105,9 @@ public class QuickSort {
    * automatically converted to use iteration.
    */
   public static void betterQuickSort(int[] arr, int p, int r) {
-    while(p < r) {
+    while (p < r) {
       int pivot = partition(arr, p, r);
-      if(pivot - p < r - pivot) {
+      if (pivot - p < r - pivot) {
         quickSort(arr, p, pivot - 1);
         p = pivot + 1;
       } else {
@@ -128,14 +128,14 @@ public class QuickSort {
    */
 
   public static void hoareQuickSort(int[] arr, int p, int r) {
-    while(p < r) {
+    while (p < r) {
       /*
        * The hoarePartition method partitions the array
        * such that every element in arr[q+1..r] is smaller
        * than or equal to every element in arr[p..q].
        */
       int q = hoarePartition(arr, p, r);
-      if(q - p < r - q) {
+      if (q - p < r - q) {
         quickSort(arr, p, q);
         p = q + 1;
       } else {
