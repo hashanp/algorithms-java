@@ -25,7 +25,7 @@ public class RPNEvaluator {
 	}
 	
 	public static void main(String[] args) {
-		System.out.println(evaluate("5 5 + 2 / 14 5 * +"));
+		System.out.println(evaluate("6 3 /"));
 	}
 	
 	/*
@@ -39,18 +39,13 @@ public class RPNEvaluator {
 		 *  Lexer
 		 */
 		String acc = ""; // Stores numbers while being processed
-		for(char exprItem: expr.toCharArray()) {
-			if(Character.isDigit(exprItem)) {
-				acc += Character.toString(exprItem);
+		
+		for(String item: expr.split(" +")) { // One or more spaces
+			if(item.matches("\\d+")) {
+				items.push(new Item(Integer.parseInt(item)));
 			} else {
-				if(acc != "") {
-					items.push(new Item(Integer.parseInt(acc.toString())));
-					acc = "";
-				}
-				if(exprItem != ' ') {
-					items.push(new Item(exprItem));
-				}
-			} 
+				items.push(new Item(item.charAt(0)));
+			}
 		}
 		
 		/*
