@@ -3,6 +3,16 @@ package Sorting;
 import java.util.Arrays;
 
 public class BubbleSort {
+	/*
+	 * Best case time complexity: Θ(n^2)
+	 * Average case time complexity: Θ(n^2)
+	 * Worst case time complexity: Θ(n^2)
+	 * 
+	 * Note an optimised implementation exists,
+	 * of bubble sort with a best case time
+	 * complexity of Θ(n).
+	 */
+	
 	public static void bubbleSort(int[] arr) {
 		for(int i = 0; i < arr.length - 1; i++) {
 			/*
@@ -38,8 +48,32 @@ public class BubbleSort {
 		}
 	}
 	
+	/*
+	 * Unlike the above algorithm, whose best case it the same as
+	 * its average case. This version of bubble sort, checks in 
+	 * each iteration, whether the list is sorted yet. This ensures
+	 * the algorithm halts, once the list is sorted. The best case
+	 * time complexity of this algorithm is Θ(n).
+	 */
+	public static void optimisedBubbleSort(int[] arr) {
+		boolean sorted = false;
+		int n = arr.length;
+		while(!sorted) {
+			sorted = true;
+			for(int i = 0; i < n - 1; i++) {
+				if(arr[i] > arr[i + 1]) {
+					int temp = arr[i + 1];
+					arr[i + 1] = arr[i];
+					arr[i] = temp;
+					sorted = false;
+				}
+			}
+			n--;
+		}
+	}
+	
 	public static void main(String[] args) {
-		int[] testData = {3, 9, 8, 3, 5, 2, 1};
+		int[] testData = {9, 8, 7, 6, 5, 4, 3, 2};
 		bubbleSort(testData);
 		System.out.println(Arrays.toString(testData));
 	}
