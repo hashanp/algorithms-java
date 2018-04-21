@@ -150,7 +150,8 @@ public class QuickSort {
   }
 
   public static void randomisedQuickSort(int[] arr) {
-    quickSort(Randomise.randomise(arr));
+    Randomise.randomise(arr);
+    quickSort(arr);
   }
 
   public static void main(String[] args) {
