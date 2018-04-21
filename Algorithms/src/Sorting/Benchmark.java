@@ -84,7 +84,7 @@ public class Benchmark {
       long heapSort = time(HeapSort::heapSort, arr);
       long insertionSort = time(InsertionSort::insertionSort, arr);
       long mergeSort = time(MergeSort::mergeSort, arr);
-      long quickSort = time(QuickSort::quickSort, arr);
+      long quickSort = time(QuickSort::betterQuickSort, arr);
       long selectionSort = time(SelectionSort::selectionSort, arr);
       long bubbleSort = time(BubbleSort::bubbleSort, arr);
       long optimisedBubbleSort = time(BubbleSort::optimisedBubbleSort, arr);
@@ -112,7 +112,7 @@ public class Benchmark {
 
       long heapSort = time(HeapSort::heapSort, arr);
       long mergeSort = time(MergeSort::mergeSort, arr);
-      long quickSort = time(QuickSort::quickSort, arr);
+      long quickSort = time(QuickSort::betterQuickSort, arr);
       long nativeSort = time(Arrays::sort, arr);
 
       writer.write(i + "," + heapSort + "," + mergeSort + "," + quickSort + "," + nativeSort + "\n");
