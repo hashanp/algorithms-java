@@ -9,31 +9,31 @@ import java.util.HashSet;
 import java.util.Set;
 
 public class QuickUnion {
-  public int[] data; // Stores component information
-  private int[] size; // Stores height of trees
+  public final int[] data; // Stores component information
+  private final int[] size; // Stores height of trees
 
   public QuickUnion(int n) {
     data = new int[n];
     size = new int[n];
-    for(int i = 0; i < n; i++) {
+    for (int i = 0; i < n; i++) {
       data[i] = i;
       size[i] = 1;
     }
   }
 
   private int root(int a) {
-    while(data[a] != a) {
+    while (data[a] != a) {
       a = data[a];
     }
     return a;
   }
 
   public void union(int a, int b) {
-    int rootA = root(a);
-    int rootB = root(b);
-    if(size[rootA] > size[rootB]) {
+    final int rootA = root(a);
+    final int rootB = root(b);
+    if (size[rootA] > size[rootB]) {
       int currentB = b;
-      while(data[currentB] != currentB) {
+      while (data[currentB] != currentB) {
         int temp = currentB;
         currentB = data[currentB];
         data[temp] = rootA;
@@ -42,7 +42,7 @@ public class QuickUnion {
       size[rootB] = Math.max(size[rootB], 1 + size[rootA]);
     } else {
       int currentA = a;
-      while(data[currentA] != currentA) {
+      while (data[currentA] != currentA) {
         int temp = currentA;
         currentA = data[currentA];
         data[temp] = rootB;
@@ -61,10 +61,12 @@ public class QuickUnion {
   }
 
   public static QuickUnion readFromFile(String file) throws IOException {
-    BufferedReader buf = new BufferedReader(new InputStreamReader(new FileInputStream(file)));
-    QuickUnion quickUnion = new QuickUnion(Integer.parseInt(buf.readLine()));
+    final BufferedReader buf =
+        new BufferedReader(new InputStreamReader(new FileInputStream(file)));
+    final QuickUnion quickUnion =
+        new QuickUnion(Integer.parseInt(buf.readLine()));
     String line = buf.readLine();
-    while(line != null) {
+    while (line != null) {
       String[] parts = line.split(" ");
       int a = Integer.parseInt(parts[0]);
       int b = Integer.parseInt(parts[1]);
@@ -75,8 +77,8 @@ public class QuickUnion {
   }
 
   public static void main(String[] args) throws IOException {
-    QuickUnion quickUnion = readFromFile("./largeUF.txt");
-    Set<Integer> set = new HashSet<Integer>();
+    final QuickUnion quickUnion = readFromFile("./Algorithms/largeUF.txt");
+    final Set<Integer> set = new HashSet<>();
     for(int i = 0; i < quickUnion.data.length; i++) {
       set.add(quickUnion.root(quickUnion.data[i]));
     }
