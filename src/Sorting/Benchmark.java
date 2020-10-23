@@ -47,7 +47,7 @@ public class Benchmark {
    * `sorted` is a test data generator that generates an integer array
    * of length n, that is sorted i.e. with 0 inversions.
    */
-  public static ITestDataGenerator sorted = (n) -> {
+  public static ITestDataGenerator sorted = n -> {
     int[] ret = new int[n];
     for(int i = 0; i < n; i++) {
       ret[i] = i;
@@ -74,27 +74,27 @@ public class Benchmark {
    */
   public static void benchmark(ITestDataGenerator testDataGenerator,
     String output, int start, int end, int increment) throws IOException {
-    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)));
-    writer.write("Length,Optimised Bubble Sort,Bubble Sort,Heap Sort,Insertion Sort,"
-        + "Merge Sort,Quick Sort,Selection Sort,Java's Native Sort\n");
-    for(int i = start; i <= end; i += increment) {
-      System.out.println(i);
-      int[] arr = testDataGenerator.generate(i);
+    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)))) {
+      writer.write("Length,Optimised Bubble Sort,Bubble Sort,Heap Sort,Insertion Sort,"
+              + "Merge Sort,Quick Sort,Selection Sort,Java's Native Sort\n");
+      for (int i = start; i <= end; i += increment) {
+        System.out.println(i);
+        int[] arr = testDataGenerator.generate(i);
 
-      long heapSort = time(HeapSort::heapSort, arr);
-      long insertionSort = time(InsertionSort::insertionSort, arr);
-      long mergeSort = time(MergeSort::mergeSort, arr);
-      long quickSort = time(QuickSort::betterQuickSort, arr);
-      long selectionSort = time(SelectionSort::selectionSort, arr);
-      long bubbleSort = time(BubbleSort::bubbleSort, arr);
-      long optimisedBubbleSort = time(BubbleSort::optimisedBubbleSort, arr);
-      long nativeSort = time(Arrays::sort, arr);
+        long heapSort = time(HeapSort::heapSort, arr);
+        long insertionSort = time(InsertionSort::insertionSort, arr);
+        long mergeSort = time(MergeSort::mergeSort, arr);
+        long quickSort = time(QuickSort::betterQuickSort, arr);
+        long selectionSort = time(SelectionSort::selectionSort, arr);
+        long bubbleSort = time(BubbleSort::bubbleSort, arr);
+        long optimisedBubbleSort = time(BubbleSort::optimisedBubbleSort, arr);
+        long nativeSort = time(Arrays::sort, arr);
 
-      writer.write(i + "," + optimisedBubbleSort + "," + bubbleSort + ","
-              + heapSort + "," + insertionSort + "," + mergeSort + "," + quickSort + "," + selectionSort +
-              "," + nativeSort + "\n");
+        writer.write(i + "," + optimisedBubbleSort + "," + bubbleSort + ","
+                + heapSort + "," + insertionSort + "," + mergeSort + "," + quickSort + "," + selectionSort +
+                "," + nativeSort + "\n");
+      }
     }
-    writer.close();
   }
 
   /*
@@ -104,20 +104,20 @@ public class Benchmark {
    */
   public static void benchmark2(ITestDataGenerator testDataGenerator,
       String output, int start, int end, int increment) throws IOException {
-    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)));
-    writer.write("Length,Heap Sort,Merge Sort,Quick Sort,Java's Native Sort\n");
-    for(int i = start; i <= end; i += increment) {
-      System.out.println(i);
-      int[] arr = testDataGenerator.generate(i);
+    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)))) {
+      writer.write("Length,Heap Sort,Merge Sort,Quick Sort,Java's Native Sort\n");
+      for (int i = start; i <= end; i += increment) {
+        System.out.println(i);
+        int[] arr = testDataGenerator.generate(i);
 
-      long heapSort = time(HeapSort::heapSort, arr);
-      long mergeSort = time(MergeSort::mergeSort, arr);
-      long quickSort = time(QuickSort::betterQuickSort, arr);
-      long nativeSort = time(Arrays::sort, arr);
+        long heapSort = time(HeapSort::heapSort, arr);
+        long mergeSort = time(MergeSort::mergeSort, arr);
+        long quickSort = time(QuickSort::betterQuickSort, arr);
+        long nativeSort = time(Arrays::sort, arr);
 
-      writer.write(i + "," + heapSort + "," + mergeSort + "," + quickSort + "," + nativeSort + "\n");
+        writer.write(i + "," + heapSort + "," + mergeSort + "," + quickSort + "," + nativeSort + "\n");
+      }
     }
-    writer.close();
   }
 
   /*
@@ -127,19 +127,19 @@ public class Benchmark {
    */
   public static void benchmark3(ITestDataGenerator testDataGenerator,
     String output, int start, int end, int increment) throws IOException {
-    BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)));
-    writer.write("Length,Heap Sort,Merge Sort,Java's Native Sort\n");
-    for(int i = start; i <= end; i += increment) {
-      System.out.println(i);
-      int[] arr = testDataGenerator.generate(i);
+    try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(output)))) {
+      writer.write("Length,Heap Sort,Merge Sort,Java's Native Sort\n");
+      for (int i = start; i <= end; i += increment) {
+        System.out.println(i);
+        int[] arr = testDataGenerator.generate(i);
 
-      long heapSort = time(HeapSort::heapSort, arr);
-      long mergeSort = time(MergeSort::mergeSort, arr);
-      long nativeSort = time(Arrays::sort, arr);
+        long heapSort = time(HeapSort::heapSort, arr);
+        long mergeSort = time(MergeSort::mergeSort, arr);
+        long nativeSort = time(Arrays::sort, arr);
 
-      writer.write(i + "," + heapSort + "," + mergeSort + "," + nativeSort + "\n");
+        writer.write(i + "," + heapSort + "," + mergeSort + "," + nativeSort + "\n");
+      }
     }
-    writer.close();
   }
 
   public static void main(String[] args) throws IOException {

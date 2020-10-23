@@ -2,7 +2,7 @@ package Searching;
 
 public class BinarySearch {
   public static void main(String[] args) {
-    final int b[] = {3, 4, 5, 6, 7, 8, 9};
+    final int[] b = {3, 4, 5, 6, 7, 8, 9};
     System.out.println(binarySearch(b, 8));
   }
 
