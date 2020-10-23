@@ -22,35 +22,39 @@ public class Correctness {
 			other[i] = test[i];
 		}
 		BubbleSort.bubbleSort(other);
-		BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./test.txt")));
-		BufferedWriter writer2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./correct.txt")));
-		for(int i = 0; i < n; i++) {
-			System.out.println(test[i] + " " + other[i]);
-			writer.append(Integer.toString(test[i]) + "\n");
-			writer2.append(Integer.toString(other[i]) + "\n");
+		BufferedWriter writer2;
+		try (BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./test.txt")))) {
+			writer2 = new BufferedWriter(new OutputStreamWriter(new FileOutputStream("./correct.txt")));
+			for (int i = 0; i < n; i++) {
+				System.out.println(test[i] + " " + other[i]);
+				writer.append(Integer.toString(test[i]) + "\n");
+				writer2.append(Integer.toString(other[i]) + "\n");
+			}
+			writer.close();
 		}
-		writer.close();
 		writer2.close();
 	}
 	
 	public static boolean testMergeSort(int n) throws IOException {
 		int[] test = new int[n];
 		int[] other = new int[n];
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")));
-		BufferedReader reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
-		for(int i = 0; i < n; i++) {
-			String s1 = reader.readLine();
-			String s2 = reader2.readLine();
-			test[i] = Integer.parseInt(s1);
-			other[i] = Integer.parseInt(s2);
-		}
-		MergeSort.mergeSort(test);
-		for(int i = 0; i < n; i++) {
-			if(test[i] != other[i]) {	
-				return false;
+		BufferedReader reader2;
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")))) {
+			reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
+			for (int i = 0; i < n; i++) {
+				String s1 = reader.readLine();
+				String s2 = reader2.readLine();
+				test[i] = Integer.parseInt(s1);
+				other[i] = Integer.parseInt(s2);
 			}
+			MergeSort.mergeSort(test);
+			for (int i = 0; i < n; i++) {
+				if (test[i] != other[i]) {
+					return false;
+				}
+			}
+			reader.close();
 		}
-		reader.close();
 		reader2.close();
 		return true;
 	}
@@ -59,11 +63,12 @@ public class Correctness {
 	public static boolean testQuickSort(int n) throws IOException {
 		int[] test = new int[n];
 		int[] other = new int[n];
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")));
-		BufferedReader reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
-		for(int i = 0; i < n; i++) {
-			test[i] = Integer.parseInt(reader.readLine());
-			other[i] = Integer.parseInt(reader2.readLine());
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")))) {
+			BufferedReader reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
+			for (int i = 0; i < n; i++) {
+				test[i] = Integer.parseInt(reader.readLine());
+				other[i] = Integer.parseInt(reader2.readLine());
+			}
 		}
 		QuickSort.betterQuickSort(test);
 		for(int i = 0; i < n; i++) {
@@ -77,22 +82,24 @@ public class Correctness {
 	public static boolean testBubbleSort(int n) throws IOException {
 		int[] test = new int[n];
 		int[] other = new int[n];
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")));
-		BufferedReader reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
-		for(int i = 0; i < n; i++) {
-			String s1 = reader.readLine();
-			String s2 = reader2.readLine();
-			//System.out.println(Integer.parseInt(s1) + " " + Integer.parseInt(s2));
-			test[i] = Integer.parseInt(s1);
-			other[i] = Integer.parseInt(s2);
-		}
-		BubbleSort.optimisedBubbleSort(test);
-		for(int i = 0; i < n; i++) {
-			if(test[i] != other[i]) {	
-				return false;
+		BufferedReader reader2;
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")))) {
+			reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
+			for (int i = 0; i < n; i++) {
+				String s1 = reader.readLine();
+				String s2 = reader2.readLine();
+				//System.out.println(Integer.parseInt(s1) + " " + Integer.parseInt(s2));
+				test[i] = Integer.parseInt(s1);
+				other[i] = Integer.parseInt(s2);
 			}
+			BubbleSort.optimisedBubbleSort(test);
+			for (int i = 0; i < n; i++) {
+				if (test[i] != other[i]) {
+					return false;
+				}
+			}
+			reader.close();
 		}
-		reader.close();
 		reader2.close();
 		return true;
 	}
@@ -100,22 +107,24 @@ public class Correctness {
 	public static boolean testSelectionSort(int n) throws IOException {
 		int[] test = new int[n];
 		int[] other = new int[n];
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")));
-		BufferedReader reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
-		for(int i = 0; i < n; i++) {
-			String s1 = reader.readLine();
-			String s2 = reader2.readLine();
-			//System.out.println(Integer.parseInt(s1) + " " + Integer.parseInt(s2));
-			test[i] = Integer.parseInt(s1);
-			other[i] = Integer.parseInt(s2);
-		}
-		SelectionSort.selectionSort(test);
-		for(int i = 0; i < n; i++) {
-			if(test[i] != other[i]) {	
-				return false;
+		BufferedReader reader2;
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")))) {
+			reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
+			for (int i = 0; i < n; i++) {
+				String s1 = reader.readLine();
+				String s2 = reader2.readLine();
+				//System.out.println(Integer.parseInt(s1) + " " + Integer.parseInt(s2));
+				test[i] = Integer.parseInt(s1);
+				other[i] = Integer.parseInt(s2);
 			}
+			SelectionSort.selectionSort(test);
+			for (int i = 0; i < n; i++) {
+				if (test[i] != other[i]) {
+					return false;
+				}
+			}
+			reader.close();
 		}
-		reader.close();
 		reader2.close();
 		return true;
 	}
@@ -123,22 +132,24 @@ public class Correctness {
 	public static boolean testHeapSort(int n) throws IOException {
 		int[] test = new int[n];
 		int[] other = new int[n];
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")));
-		BufferedReader reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
-		for(int i = 0; i < n; i++) {
-			String s1 = reader.readLine();
-			String s2 = reader2.readLine();
-			//System.out.println(Integer.parseInt(s1) + " " + Integer.parseInt(s2));
-			test[i] = Integer.parseInt(s1);
-			other[i] = Integer.parseInt(s2);
-		}
-		HeapSort.heapSort(test);
-		for(int i = 0; i < n; i++) {
-			if(test[i] != other[i]) {	
-				return false;
+		BufferedReader reader2;
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")))) {
+			reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
+			for (int i = 0; i < n; i++) {
+				String s1 = reader.readLine();
+				String s2 = reader2.readLine();
+				//System.out.println(Integer.parseInt(s1) + " " + Integer.parseInt(s2));
+				test[i] = Integer.parseInt(s1);
+				other[i] = Integer.parseInt(s2);
 			}
+			HeapSort.heapSort(test);
+			for (int i = 0; i < n; i++) {
+				if (test[i] != other[i]) {
+					return false;
+				}
+			}
+			reader.close();
 		}
-		reader.close();
 		reader2.close();
 		return true;
 	}
@@ -146,22 +157,24 @@ public class Correctness {
 	public static boolean testInsertionSort(int n) throws IOException {
 		int[] test = new int[n];
 		int[] other = new int[n];
-		BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")));
-		BufferedReader reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
-		for(int i = 0; i < n; i++) {
-			String s1 = reader.readLine();
-			String s2 = reader2.readLine();
-			//System.out.println(Integer.parseInt(s1) + " " + Integer.parseInt(s2));
-			test[i] = Integer.parseInt(s1);
-			other[i] = Integer.parseInt(s2);
-		}
-		InsertionSort.insertionSort(test);
-		for(int i = 0; i < n; i++) {
-			if(test[i] != other[i]) {	
-				return false;
+		BufferedReader reader2;
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream("./test.txt")))) {
+			reader2 = new BufferedReader(new InputStreamReader(new FileInputStream("./correct.txt")));
+			for (int i = 0; i < n; i++) {
+				String s1 = reader.readLine();
+				String s2 = reader2.readLine();
+				//System.out.println(Integer.parseInt(s1) + " " + Integer.parseInt(s2));
+				test[i] = Integer.parseInt(s1);
+				other[i] = Integer.parseInt(s2);
 			}
+			InsertionSort.insertionSort(test);
+			for (int i = 0; i < n; i++) {
+				if (test[i] != other[i]) {
+					return false;
+				}
+			}
+			reader.close();
 		}
-		reader.close();
 		reader2.close();
 		return true;
 	}

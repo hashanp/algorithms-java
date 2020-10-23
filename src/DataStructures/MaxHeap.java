@@ -2,7 +2,6 @@ package DataStructures;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Arrays;
 
 public class MaxHeap {
   private List<Integer> data = new ArrayList<>();
@@ -56,14 +55,6 @@ public class MaxHeap {
       }
     }
     return c;
-  }
-
-  public int maximum() {
-    return data.get(0);
-  }
-
-  public boolean isEmpty() {
-    return data.size() == 0;
   }
 
   public static void main(String[] args) {
